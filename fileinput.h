@@ -2,7 +2,7 @@
 #define FILEINPUT_H
 
 #include <QWidget>
-
+#include "algraph.h"
 namespace Ui {
 class FileInput;
 }
@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::FileInput *ui;
+    ALGraph G;
 };
 
 #endif // FILEINPUT_H

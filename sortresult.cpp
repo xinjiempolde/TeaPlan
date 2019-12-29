@@ -4,15 +4,19 @@
 #include <QFile>
 #include <QTreeWidget>
 #include <QTextStream>
-SortResult::SortResult(int TermNum, const QVector<VNode> &Sort, QWidget *parent) :
+SortResult::SortResult(const QVector<VNode> &Sort, QWidget *parent, bool flag) :
     QWidget(parent),
     ui(new Ui::SortResult),
-    termNum(TermNum),
     Sort(Sort)
 {
     ui->setupUi(this);
+    setWindowTitle("已排课程查看");
+    setWindowIcon(QIcon(":/windowico.ico"));
     ShowData();
-    SaveData();
+    if (flag)
+    {
+        SaveData();
+    }
 }
 
 SortResult::~SortResult()

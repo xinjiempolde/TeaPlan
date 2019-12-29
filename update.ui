@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SearchWindow</class>
- <widget class="QWidget" name="SearchWindow">
+ <class>UpDate</class>
+ <widget class="QWidget" name="UpDate">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -16,10 +16,10 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>170</x>
      <y>80</y>
-     <width>511</width>
-     <height>291</height>
+     <width>531</width>
+     <height>301</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -33,24 +33,12 @@
          </font>
         </property>
         <property name="text">
-         <string>请输入课程名：</string>
+         <string>请输入要更改的课程名称：</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="name_edit"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="name_button">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>按课程名查找</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="pre_edit"/>
       </item>
      </layout>
     </item>
@@ -64,36 +52,24 @@
          </font>
         </property>
         <property name="text">
-         <string>请输入学期数：</string>
+         <string>请输入更改后的课程名称：</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="term_edit"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="term_button">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>按学期数查找</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="after_edit"/>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="all_button">
+     <widget class="QPushButton" name="submit_button">
       <property name="font">
        <font>
         <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>显示所有课表</string>
+       <string>确认</string>
       </property>
      </widget>
     </item>

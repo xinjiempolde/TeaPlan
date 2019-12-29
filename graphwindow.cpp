@@ -278,6 +278,6 @@ void GraphWindow::on_course_button_clicked()
     }
     */
 
-    SortResult* sortwindow = new SortResult(TermNum, Sort, nullptr);
+    SortResult* sortwindow = new SortResult(Sort, nullptr, true);
     sortwindow->show();
 }

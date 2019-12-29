@@ -23,8 +23,10 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     manual.cpp \
+    pointinfo.cpp \
     searchwindow.cpp \
-    sortresult.cpp
+    sortresult.cpp \
+    update.cpp
 
 HEADERS += \
     algraph.h \
@@ -33,18 +35,25 @@ HEADERS += \
     graphwindow.h \
     mainwindow.h \
     manual.h \
+    pointinfo.h \
     searchwindow.h \
-    sortresult.h
+    sortresult.h \
+    update.h
 
 FORMS += \
     fileinput.ui \
     graphwindow.ui \
     mainwindow.ui \
     manual.ui \
+    pointinfo.ui \
     searchwindow.ui \
-    sortresult.ui
+    sortresult.ui \
+    update.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    image.qrc

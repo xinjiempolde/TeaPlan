@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>windowico.ico</file>
+        <file>cartoon.png</file>
+    </qresource>
+</RCC>

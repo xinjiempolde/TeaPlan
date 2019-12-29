@@ -13,7 +13,8 @@ class Manual : public QWidget
 
 public:
     explicit Manual(QWidget *parent = nullptr);
-    ~Manual();
+    ~Manual() override;
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_record_button_clicked();

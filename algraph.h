@@ -35,7 +35,6 @@ public:
     ALGraph();
     int GLocateVex(int x);
     bool Traverse();
-    void CouseSort(int MaxPoints, int MaxWeeks);
 public:
     VNode AdjList[MAX_VERTEX_NUM];   //顶点表
     int vexnum;        //图的当前顶点数

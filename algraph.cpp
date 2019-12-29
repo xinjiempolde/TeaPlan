@@ -34,7 +34,3 @@ bool ALGraph::Traverse()
     return flag;
 }
 
-void ALGraph::CouseSort(int MaxPoints, int MaxWeeks)
-{
-
-}
