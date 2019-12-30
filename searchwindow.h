@@ -1,3 +1,14 @@
+/**************************************************************************
+
+Copyright: Xinji Zhou & Yajiong Liu & Songlin Wang All Rights Reserved
+
+Author: 刘亚炯
+
+Date: 2019-12-20
+
+Description: 查询已排课程相关信息
+
+**************************************************************************/
 #ifndef SEARCHWINDOW_H
 #define SEARCHWINDOW_H
 
@@ -14,6 +25,14 @@ class SearchWindow : public QWidget
 public:
     explicit SearchWindow(QWidget *parent = nullptr);
     ~SearchWindow();
+    /*
+     * 函数名:ReadFileData
+     * 功能:从文件中读取已存在的已排课程信息
+     * 参数:无
+     * 输入:无
+     * 输出:无
+     * 返回值:无
+     */
     void ReadFileData();
 
 private slots:

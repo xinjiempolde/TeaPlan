@@ -31,6 +31,7 @@ void FileInput::on_pushButton_clicked()
         QMessageBox::warning(this, "警告", "文件打开失败！");
         return;
     }
+    G.clear();  // 防止重复点击导致重复数据
     QTextStream s(&file);
     while (!s.atEnd())
     {

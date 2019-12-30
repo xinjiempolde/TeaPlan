@@ -1,3 +1,14 @@
+/**************************************************************************
+
+Copyright: Xinji Zhou & Yajiong Liu & Songlin Wang All Rights Reserved
+
+Author: 王崧霖
+
+Date: 2019-12-20
+
+Description: 从文件中输入数据的窗口
+
+**************************************************************************/
 #ifndef FILEINPUT_H
 #define FILEINPUT_H
 

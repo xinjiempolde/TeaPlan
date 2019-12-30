@@ -1,3 +1,14 @@
+/**************************************************************************
+
+Copyright: Xinji Zhou & Yajiong Liu & Songlin Wang All Rights Reserved
+
+Author: 刘亚炯
+
+Date: 2019-12-20
+
+Description: 手动输入数据的窗口
+
+**************************************************************************/
 #ifndef MANUAL_H
 #define MANUAL_H
 
@@ -14,7 +25,7 @@ class Manual : public QWidget
 public:
     explicit Manual(QWidget *parent = nullptr);
     ~Manual() override;
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
     void on_record_button_clicked();

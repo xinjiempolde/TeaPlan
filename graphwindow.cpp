@@ -8,6 +8,8 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include <QQueue>
+#include <QIntValidator>
+#include <QTime>
 GraphWindow::GraphWindow(QWidget *parent, ALGraph* G) :
     QMainWindow(parent),
     ui(new Ui::GraphWindow),
@@ -19,6 +21,16 @@ GraphWindow::GraphWindow(QWidget *parent, ALGraph* G) :
     ui->setupUi(this);
     ui->centralwidget->setMouseTracking(true);
     setMouseTracking(true);
+    setWindowTitle("选择先导关系");
+    ui->textBrowser->setVisible(false);
+
+    /* 限制输入内容 */
+    QRegExpValidator *point = new QRegExpValidator(QRegExp("\\d+(.\\d+)?$"));
+    ui->point_edit->setValidator(point);
+    QRegExpValidator *term = new QRegExpValidator(QRegExp("\\d+"));
+    ui->term_edit->setValidator(term);
+
+    /* 初始化值 */
     last_click = 0;
     for (int i = 0; i < n; i++)
     {
@@ -30,6 +42,10 @@ GraphWindow::GraphWindow(QWidget *parent, ALGraph* G) :
             HasArc[i].push_back(false);
         }
     }
+    ColorList = {Qt::blue, Qt::yellow, Qt::green, Qt::red, Qt::black, Qt::cyan, Qt::magenta};
+
+    GetBtnsPos(n);
+    PaintLable();
 }
 
 GraphWindow::~GraphWindow()
@@ -75,7 +91,7 @@ void GraphWindow::mousePressEvent(QMouseEvent *event)
         {
             CheckMap[pos] = true;
             CheckMap[last_click] = true;
-            if (HasArc[last_click][pos])
+            if (HasArc[last_click][pos] || HasArc[pos][last_click])
             {
                 QMessageBox::warning(this, "警告", "该两节点间已经存在弧！");
             }
@@ -83,8 +99,10 @@ void GraphWindow::mousePressEvent(QMouseEvent *event)
             {
                 list_line.push_back(line);
                 HasArc[last_click][pos] = true;
-                HasArc[pos][last_click] = true;
-
+                ui->textBrowser->setVisible(true);
+                QString content = ui->textBrowser->toPlainText();
+                content += QString("%1").arg(G->AdjList[last_click].data.Name) + " -> " +QString("%1").arg(G->AdjList[pos].data.Name) + "\n";
+                ui->textBrowser->setText(content);
                 ArcNode* s = new ArcNode;
                 s->adjvex = pos;
                 s->nextarc = G->AdjList[last_click].firstarc;
@@ -127,6 +145,7 @@ void GraphWindow::mouseMoveEvent(QMouseEvent *event)
 
 void GraphWindow::GetBtnsPos(int n, const coor &center, int stripe, coor pointsize)
 {
+    list_button.clear();
     CacuUtils utils;
     double angle = 360 / n;
     coor point = {center.x + stripe, center.y};
@@ -137,9 +156,34 @@ void GraphWindow::GetBtnsPos(int n, const coor &center, int stripe, coor pointsi
     }
 }
 
+void GraphWindow::PaintLable()
+{
+    int level = list_button.size() / 2;
+    for (int i = 0; i < list_button.size(); i++)
+    {
+        QLabel* label = new QLabel(this);
+        if (i <= level)
+        {
+            label->setGeometry(static_cast<int>(list_button[i].x()) - 20,static_cast<int>(list_button[i].y()) + 20, 60,30);
+        }
+        else
+        {
+            label->setGeometry(static_cast<int>(list_button[i].x() - 20),static_cast<int>(list_button[i].y()) - 25, 60,30);
+        }
+        label->setText(G->AdjList[i].data.Name);
+        label->show();
+    }
+}
+
+Qt::GlobalColor GraphWindow::GetRandomColor()
+{
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    int pos = qrand() % 5;
+    return ColorList[pos];
+}
+
 void GraphWindow::paintEvent(QPaintEvent *)
 {
-    GetBtnsPos(n);
     /* 绘制需要的点 */
     for (int i = 0; i < n; i++)
     {
@@ -157,15 +201,15 @@ void GraphWindow::paintEvent(QPaintEvent *)
     }
     /* 绘制用户自己画的连线 */
     QPainter painter(this);
-    it = list_line.begin();
-    painter.setPen(QPen(Qt::blue,4));//设置画笔形式
-    while (it != list_line.end())
+    int i;
+    for (i = 0; i <list_line.size(); i++)
     {
-        painter.drawLine(it->begin, it->end);//画直线
-        it++;
+        painter.setPen(QPen(ColorList[i % ColorList.size()], 4));
+        painter.drawLine(list_line[i].begin, list_line[i].end);
     }
 
     /* 只有点击了某一个点后才能实时绘制线条 */
+    painter.setPen(QPen(ColorList[i % ColorList.size()],4));//设置画笔形式
     if (count == 1)
     {
         painter.drawLine(line.begin, line.end);
@@ -205,8 +249,9 @@ void GraphWindow::on_course_button_clicked()
         {
             QMessageBox::warning(this, "警告", "存在环！");
             this->close();
-        }
+            return;
 
+        }
         while (!q.isEmpty())
         {
             VNode* v = q.dequeue();
@@ -228,9 +273,10 @@ void GraphWindow::on_course_button_clicked()
             else
             {
                 TermNum++;
-                /* 注意，这里只能更新t不能更新s,因为有可能同时进行的先导课还没上完 */
+                /* 注意，这里只能更新t,s的更新是不确定的,因为有可能同时进行的先导课还没上完 */
                 /* 所以即使是下一个学期了，也必须把没上完的先导课上完 */
                 t = MaxPoints;
+                s = MaxWeeks;
                 v->data.term = TermNum;
                 Sort.push_back(*v);
             }
@@ -243,6 +289,7 @@ void GraphWindow::on_course_button_clicked()
                 while (it != Sort.end())
                 {
                     // 去查找是否有先导课存在
+                    // 含义就是要去排后导课程结果发现先导课程在同一学期
                     if (it->data.term == TermNum)
                     {
                         /* 最长先导课上完才能上后面的课 */
@@ -259,7 +306,7 @@ void GraphWindow::on_course_button_clicked()
             /* 仍然在排本批次的先导课 */
             else
             {
-                s = MaxWeeks;   // 只要同一批课程没拍完，所剩周数都不用减
+                // 只要同一批课程没拍完，所剩周数都不用减
                 t -= v->data.Point;
             }
         }
@@ -277,7 +324,7 @@ void GraphWindow::on_course_button_clicked()
         }
     }
     */
-
+    this->close();
     SortResult* sortwindow = new SortResult(Sort, nullptr, true);
     sortwindow->show();
 }

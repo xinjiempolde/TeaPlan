@@ -1,3 +1,14 @@
+/**************************************************************************
+
+Copyright: Xinji Zhou & Yajiong Liu & Songlin Wang All Rights Reserved
+
+Author: 周新纪
+
+Date: 2019-12-20
+
+Description: 主窗口的设计，主要是QTabWidget
+
+**************************************************************************/
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -14,6 +25,15 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    /*
+     * 函数名:InitTabWidget
+     * 功能:初始化tabwidget
+     * 参数:无
+     * 输入:无
+     * 输出:无
+     * 返回值:无
+     */
     void InitTabWidget();
 
 private slots:

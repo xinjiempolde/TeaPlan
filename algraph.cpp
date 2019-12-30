@@ -34,3 +34,9 @@ bool ALGraph::Traverse()
     return flag;
 }
 
+void ALGraph::clear()
+{
+    vexnum = 0;
+    arcnum = 0;
+}
+

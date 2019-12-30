@@ -1,3 +1,15 @@
+/**************************************************************************
+
+Copyright: Xinji Zhou & Yajiong Liu & Songlin Wang All Rights Reserved
+
+Author: 王崧霖
+
+Date: 2019-12-20
+
+Description: 邻接表定义的图结构以及相关操作
+
+**************************************************************************/
+
 #ifndef ALGRAPH_H
 #define ALGRAPH_H
 
@@ -33,8 +45,35 @@ class ALGraph
 {
 public:
     ALGraph();
+    /*
+     * 函数名:GLocateVex
+     * 功能:在图中查找课程
+     * 参数:x为课程编号
+     * 输入:无
+     * 输出:无
+     * 返回值:课程在图中的位置
+     */
     int GLocateVex(int x);
+
+    /*
+     * 函数名:Traverse
+     * 功能:遍历图，寻找是否有未被访问的节点
+     * 参数:无
+     * 输入:无
+     * 输出:无
+     * 返回值:true已访问 false 未访问
+     */
     bool Traverse();
+
+    /*
+     * 函数名:clear
+     * 功能:清空图的一切数据
+     * 参数:无
+     * 输入:无
+     * 输出:无
+     * 返回值:无
+     */
+    void clear();
 public:
     VNode AdjList[MAX_VERTEX_NUM];   //顶点表
     int vexnum;        //图的当前顶点数
