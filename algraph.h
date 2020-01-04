@@ -14,7 +14,7 @@ Description: 邻接表定义的图结构以及相关操作
 #define ALGRAPH_H
 
 #include <QString>
-
+#include <QStringList>
 #define MAX_VERTEX_NUM 100
 /* 弧节点结构体 */
 typedef struct node{
@@ -32,6 +32,7 @@ typedef struct {
     int term;         //学期序号
     int Indegree;      //入度
     int Outdegree;    //出度
+    QStringList preCourse;  // 先导课程
 }VertexType;
 
 /* 表头结点 */

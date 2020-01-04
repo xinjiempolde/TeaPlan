@@ -109,6 +109,7 @@ void GraphWindow::mousePressEvent(QMouseEvent *event)
                 G->AdjList[last_click].firstarc = s;
                 G->AdjList[last_click].data.Outdegree++;
                 G->AdjList[pos].data.Indegree++;
+                G->AdjList[pos].data.preCourse.push_back(G->AdjList[last_click].data.Name);
             }
         }
         /* 是同一位置则取消按下效果 */

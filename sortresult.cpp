@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QTreeWidget>
+#include <QtDebug>
 #include <QTextStream>
 SortResult::SortResult(const QVector<VNode> &Sort, QWidget *parent, bool flag) :
     QWidget(parent),
@@ -36,6 +37,7 @@ void SortResult::ShowData()
     titles.append("课程名称");
     titles.append("学分");
     titles.append("应上周数");
+    titles.append("先导课程");
     treeWidget->setHeaderLabels(titles);
 
 
@@ -52,6 +54,13 @@ void SortResult::ShowData()
         s.append(Sort[m].data.Name);
         s.append(QString("%1").arg(static_cast<double>(Sort[m].data.Point)));
         s.append(QString::number(Sort[m].data.Weeks));
+        QStringList preList = Sort[m].data.preCourse;
+        QString precourse = "";
+        for (int i = 0; i < preList.size(); i++)
+        {
+            precourse += preList[i] + " ";
+        }
+        s.append(precourse);
         QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget,s);
         items.append(item);
     }
